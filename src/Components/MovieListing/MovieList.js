@@ -2,22 +2,22 @@ import MovieCard from "../MovieCard/MovieCard";
 import { useSelector } from "react-redux";
 import { getAllMovies } from "../../Features/Movie/movieSlice";
 import "./MovieList.scss";
+
+import { getCurrentPage } from "../../Features/Movie/movieSlice";
 function MovieList() {
   const movies = useSelector(getAllMovies);
-  console.log(movies);
-  console.log(`movies.results: ${movies.results}`);
-
-  // let renderMovies = "";
+  const currentPage = useSelector(getCurrentPage);
+  console.log(currentPage);
+  // console.log(`movies.results: ${movies.results}`);
 
   return (
     <div className="movie-wrapper">
       <div className="movie-list">
-        <h2>Movies</h2>
         <div className="movie-container">
           {movies.results ? (
             movies.results.map((movie, index) => {
               console.log(`movie ${movie}`);
-              return <MovieCard key={index} movie={movie} />;
+              return <MovieCard hoverable key={index} movie={movie} />;
             })
           ) : (
             <div className="movies-error">

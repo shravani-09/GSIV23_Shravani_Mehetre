@@ -1,10 +1,13 @@
 @import "../../Common/colors.scss";
 
-.movie-list {
-  margin: 20px 0px;
-  h2 {
-    color: $font-secondary;
-    margin-bottom: 10px;
-    font-weight: 400;
+.movie-wrapper {
+  .movie-list {
+    margin: 20px 0px;
+    .movie-container {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
   }
 }

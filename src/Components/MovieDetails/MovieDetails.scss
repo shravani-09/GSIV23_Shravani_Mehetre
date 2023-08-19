@@ -1,0 +1,102 @@
+$color_1: #000000;
+$color_2: #4a4a4a;
+$font-family_1: Roboto, sans-serif;
+
+.movie_detailed_card {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  .img_wrap {
+    width: 180px;
+    height: 240px;
+    margin: 15px;
+    border: 1px solid #979797;
+    background: #d8d8d8;
+    background-blend-mode: normal;
+    .movie_img {
+      width: 180px;
+      height: 240px;
+    }
+  }
+  .card_body {
+    .title_wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 15px 0px;
+
+      h4 {
+        color: $color_1;
+        font-family: $font-family_1;
+        font-size: 24px;
+        font-weight: 500;
+      }
+      p {
+        color: $color_2;
+        font-family: $font-family_1;
+        font-size: 24px;
+        font-weight: 400;
+      }
+    }
+    .about_wrap {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 7px;
+      p {
+        color: $color_1;
+        font-family: $font-family_1;
+        font-size: 20px;
+        font-weight: 400;
+        &:after {
+          content: "|";
+          margin: 0 4px;
+        }
+        &:last-child {
+          content: none;
+        }
+      }
+    }
+    .casting_wrap {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 16px;
+      gap: 12px;
+      p {
+        color: $color_1;
+        font-family: $font-family_1;
+        font-size: 20px;
+        font-weight: 400;
+      }
+      .actors_list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        span {
+          color: $color_1;
+          font-family: $font-family_1;
+          font-size: 20px;
+          font-weight: 400;
+          &:after {
+            content: ",";
+            margin-right: 8px;
+          }
+          &::last-child {
+            content: "";
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+    .card_desc_wrap {
+      display: flex;
+      flex-direction: row;
+      p {
+        color: $color_1;
+        font-family: $font-family_1;
+        font-size: 20px;
+        font-weight: 400;
+      }
+    }
+  }
+}
