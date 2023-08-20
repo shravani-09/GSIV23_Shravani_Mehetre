@@ -7,13 +7,13 @@ function MovieCard({ movie }) {
     <div className="movie_card" onClick={() => navigate(`/movie/${movie.id}`)}>
       <div className="img_wrap">
         <img
-          src={"https://image.tmdb.org/t/p/w500" + movie.backdrop_path}
+          src={"https://image.tmdb.org/t/p/w500/" + movie.backdrop_path}
           alt="movie"
         ></img>
       </div>
       <div className="card_body">
         <div className="title_wrap">
-          <h4>{movie.title}</h4> <p>{movie.vote_average.toFixed(1)}</p>
+          <h4>{movie.title}</h4> <p>{movie.vote_average}</p>
         </div>
         <p className="card_desc">{`${movie.overview}...(2 lines)`}</p>
       </div>

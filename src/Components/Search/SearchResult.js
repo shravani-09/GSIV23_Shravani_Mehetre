@@ -5,39 +5,39 @@ import "./SearchResult.scss";
 import ContentWrapper from "../ContentWrapper/ContentWrapper";
 import MovieCard from "../MovieCard/MovieCard";
 import Spinner from "../Spinner/Spinner";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getCurrentPage,
-  fetchCurrentPage,
-} from "../../Features/Movie/movieSlice";
+import { fetchDataFromApi } from "../../Common/apis/movieApi";
 
 const SearchResult = () => {
   const [data, setData] = useState(null);
   const [pageNum, setPageNum] = useState(1);
   const [loading, setLoading] = useState(false);
   const { query } = useParams();
-  const currentPage = useSelector(getCurrentPage);
-  const dispatch = useDispatch();
 
   const fetchInitialData = () => {
     setLoading(true);
-    dispatch(fetchCurrentPage(query, pageNum));
-    setData(currentPage);
-    setPageNum((prev) => prev + 1);
-    setLoading(false);
+    fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`).then(
+      (res) => {
+        setData(res);
+        setPageNum((prev) => prev + 1);
+        setLoading(false);
+      }
+    );
   };
 
   const fetchNextPageData = () => {
-    dispatch(fetchCurrentPage(query, pageNum));
-    if (data?.results) {
-      setData({
-        ...data,
-        results: [...data?.results, ...currentPage.results],
-      });
-    } else {
-      setData(currentPage);
-    }
-    setPageNum((prev) => prev + 1);
+    fetchDataFromApi(`/search/multi?query=${query}&page=${pageNum}`).then(
+      (res) => {
+        if (data?.results) {
+          setData({
+            ...data,
+            results: [...data?.results, ...res.results],
+          });
+        } else {
+          setData(res);
+        }
+        setPageNum((prev) => prev + 1);
+      }
+    );
   };
 
   useEffect(() => {
@@ -65,12 +65,9 @@ const SearchResult = () => {
                 loader={<Spinner />}
               >
                 {data?.results.map((item, index) => {
-                  if (item.media_type === "person") return;
-                  else {
-                    return (
-                      <MovieCard key={index} data={item} fromSearch={true} />
-                    );
-                  }
+                  return (
+                    <MovieCard key={index} movie={item} fromSearch={true} />
+                  );
                 })}
               </InfiniteScroll>
             </>

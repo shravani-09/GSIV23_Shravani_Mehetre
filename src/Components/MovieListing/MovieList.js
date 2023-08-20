@@ -1,23 +1,54 @@
 import MovieCard from "../MovieCard/MovieCard";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getAllMovies } from "../../Features/Movie/movieSlice";
 import "./MovieList.scss";
+import { useEffect, useState } from "react";
+import { fetchAsyncMovies } from "../../Features/Movie/movieSlice";
 
-import { getCurrentPage } from "../../Features/Movie/movieSlice";
 function MovieList() {
-  const movies = useSelector(getAllMovies);
-  const currentPage = useSelector(getCurrentPage);
-  console.log(currentPage);
-  // console.log(`movies.results: ${movies.results}`);
+  const [movies, setMovies] = useState([]);
+  const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
+  const newMovies = useSelector(getAllMovies);
+  const array = new Array(newMovies.results);
+
+  function fetchMovies() {
+    dispatch(fetchAsyncMovies(page));
+    setMovies((preMovies) => [...preMovies, ...array]);
+    setPage((prePage) => prePage + 1);
+  }
+
+  useEffect(() => {
+    fetchMovies();
+  }, []);
+
+  console.log(movies);
+
+  const handleScroll = () => {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.body.scrollHeight - 500
+    ) {
+      fetchMovies();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div className="movie-wrapper">
       <div className="movie-list">
         <div className="movie-container">
-          {movies.results ? (
-            movies.results.map((movie, index) => {
-              console.log(`movie ${movie}`);
-              return <MovieCard hoverable key={index} movie={movie} />;
+          {movies ? (
+            movies.map((movie) => {
+              return movie.map((m, i) => {
+                return <MovieCard key={m.id} movie={m} />;
+              });
             })
           ) : (
             <div className="movies-error">

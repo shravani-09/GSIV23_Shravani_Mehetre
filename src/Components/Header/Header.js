@@ -18,15 +18,14 @@ function Header() {
       <div className="searchInput">
         <input
           type="text"
-          placeholder="Search for a movie or tv show...."
+          placeholder="Search for a movie "
           onChange={(e) => setQuery(e.target.value)}
           onKeyUp={searchQueryHandler}
         />
-        <button>Search</button>
       </div>
-      <div className="user-img">
+      <div className="logo-img">
         <Link to="/">
-          <img src={logo} alt="user" />
+          <img src={logo} alt="logo" />
         </Link>
       </div>
     </div>

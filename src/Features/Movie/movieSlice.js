@@ -11,6 +11,18 @@ export const fetchAsyncMovies = createAsyncThunk(
   }
 );
 
+//fetch movie list
+// export const fetchAsyncMovies = createAsyncThunk(
+//   "movies/fetchAsyncMovies",
+//   async (pageNum) => {
+//     const data = await fetchDataFromApi(
+//       `/movie/upcoming?language=en-US&page=${pageNum}`
+//       // `/movie/upcoming/?language=en-US&page=${pageNum}`
+//     );
+
+//     return data;
+//   }
+// );
 //fetch movie by id
 export const fetchAsyncMovieById = createAsyncThunk(
   "movies/fetchAsyncMovieById",
