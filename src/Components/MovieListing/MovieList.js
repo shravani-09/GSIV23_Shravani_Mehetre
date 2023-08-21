@@ -11,7 +11,6 @@ function MovieList() {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const newMovies = useSelector(getAllMovies);
-  const status = useSelector((state) => state.movies.loading);
   const array = new Array(newMovies.results);
 
   const fetchMovies = () => {
