@@ -4,31 +4,25 @@ import { getAllMovies } from "../../Features/Movie/movieSlice";
 import "./MovieList.scss";
 import { useEffect, useState } from "react";
 import { fetchAsyncMovies } from "../../Features/Movie/movieSlice";
-import Spinner from "../Spinner/Spinner";
 
-function MovieList() {
+function MovieListV1() {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const newMovies = useSelector(getAllMovies);
-  const status = useSelector((state) => state.movies.loading);
   const array = new Array(newMovies.results);
 
-  const fetchMovies = () => {
+  function fetchMovies() {
     dispatch(fetchAsyncMovies(page));
     setMovies((preMovies) => [...preMovies, ...array]);
     setPage((prePage) => prePage + 1);
-  };
+  }
 
   useEffect(() => {
     fetchMovies();
   }, []);
 
-  // useEffect(() => {
-  //   if (status === "idle") {
-  //     fetchMovies();
-  //   }
-  // }, [status]);
+  console.log(movies);
 
   const handleScroll = () => {
     if (
@@ -46,16 +40,13 @@ function MovieList() {
     };
   }, []);
 
-  // if (status === "loading") {
-  //   return <Spinner />;
-  // }
   return (
     <div className="movie-wrapper">
       <div className="movie-list">
         <div className="movie-container">
           {movies ? (
             movies.map((movie) => {
-              return movie?.map((m, i) => {
+              return movie.map((m, i) => {
                 return <MovieCard key={m.id} movie={m} />;
               });
             })
@@ -70,4 +61,4 @@ function MovieList() {
   );
 }
 
-export default MovieList;
+export default MovieListV1;

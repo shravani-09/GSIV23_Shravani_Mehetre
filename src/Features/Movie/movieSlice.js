@@ -11,18 +11,6 @@ export const fetchAsyncMovies = createAsyncThunk(
   }
 );
 
-//fetch movie list
-// export const fetchAsyncMovies = createAsyncThunk(
-//   "movies/fetchAsyncMovies",
-//   async (pageNum) => {
-//     const data = await fetchDataFromApi(
-//       `/movie/upcoming?language=en-US&page=${pageNum}`
-//       // `/movie/upcoming/?language=en-US&page=${pageNum}`
-//     );
-
-//     return data;
-//   }
-// );
 //fetch movie by id
 export const fetchAsyncMovieById = createAsyncThunk(
   "movies/fetchAsyncMovieById",
@@ -58,6 +46,7 @@ const initialState = {
   selectMovie: {},
   details: {},
   page: {},
+  loading: "idle",
 };
 
 const movieSlice = createSlice({
@@ -69,15 +58,22 @@ const movieSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchAsyncMovies.pending]: () => {
+    [fetchAsyncMovies.pending]: (state, action) => {
       console.log("Pending");
+      state.loading = "loading";
     },
     [fetchAsyncMovies.fulfilled]: (state, action) => {
       console.log("Fetched Successfully!");
+      // Object.assign(state, { movies: action.payload, loading: "succeeded" });
+      // state.loading = "succeeded";
+      //state = { ...state, movies: action.payload, loading: "succeeded" };
       return { ...state, movies: action.payload };
+      // console.log(state);
+      // return state.movies;
     },
     // for movies
-    [fetchAsyncMovies.rejected]: (error) => {
+    [fetchAsyncMovies.rejected]: (state, error) => {
+      state.loading = "failed";
       console.log(error);
     },
     //for movies by id
