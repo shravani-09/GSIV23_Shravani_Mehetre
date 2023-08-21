@@ -54,7 +54,7 @@ function MovieList() {
       <div className="movie-list">
         <div className="movie-container">
           {movies ? (
-            movies.map((movie) => {
+            movies?.map((movie) => {
               return movie?.map((m, i) => {
                 return <MovieCard key={m.id} movie={m} />;
               });
